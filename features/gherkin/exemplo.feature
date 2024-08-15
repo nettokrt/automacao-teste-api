@@ -1,5 +1,8 @@
-Feature: Teste de API com HTTParty e Cucumber
+#language:pt
 
-    Scenario: Validar status code da resposta
-        Given que eu faço uma requisição GET para "https://jsonplaceholder.typicode.com/posts/1"
-        Then o status code deve ser 200
+Funcionalidade: Teste de API com HTTParty e Cucumber
+
+    @smoke_test @200 @#marcos_netto
+    Cenario: Validar status code da resposta
+        Quando que eu faço uma requisição GET
+        Entao o status code deve ser 200

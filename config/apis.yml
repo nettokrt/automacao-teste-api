@@ -1,0 +1,7 @@
+# config/apis.yml
+
+development:
+  api_base_url: "https://jsonplaceholder.typicode.com"
+  users_endpoint: "/users"
+  posts_endpoint: "/posts"
+

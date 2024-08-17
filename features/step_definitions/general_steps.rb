@@ -1,4 +1,4 @@
-Quando('eu faço uma requisição {string} GET') do |endpoint|
+Quando('eu faço uma requisição ao {string}') do |endpoint|
   @response = HTTParty.get(APIConfig.full_url(endpoint))
 end
 

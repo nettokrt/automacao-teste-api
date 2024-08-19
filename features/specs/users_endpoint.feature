@@ -15,7 +15,7 @@ Funcionalidade: Garantir a estabilidade do endpoint /users
         | /users                   |
         | /users/1                 |        
 
-    @smoke_test @contract_users @endpoint_users @#marcos_netto
+    @smoke_tests @contract_users @endpoint_users @#marcos_netto
     Cenario: Validar as regras de contrato
         Dado que eu faça uma requisição ao "<endpoint>"
         Então a resposta deve seguir as regras de contrato

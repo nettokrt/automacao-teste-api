@@ -13,39 +13,24 @@ end
 Então('validar a resposta da API com dados mockados') do
   response_body = JSON.parse(@response.body)
   Utils.verify_status_code(@response, 200)
-  
+
   if @endpoint == "/users"
     expect(@response.code).to eq(200)
     expect(@response.body).not_to be_nil
   else
-    usuario_esperado = YAML.load_file('features/support/factory/static/development.yml').dig('users', 'user1')
+    dados_yaml = YAML.load_file('features/support/factory/static/development.yml')
+    usuario_esperado = dados_yaml.dig('users', 'user1')
+    campos = dados_yaml['campos_principais']
 
-    # Validação dos campos principais
-    expect(response_body['name']).to eq(usuario_esperado['name'])
-    expect(response_body['id']).to eq(usuario_esperado['id'])
-    expect(response_body['username']).to eq(usuario_esperado['username'])
-    expect(response_body['email']).to eq(usuario_esperado['email'])
-    
-    # Validação dos campos de endereço
-    expect(response_body['address']['street']).to eq(usuario_esperado['address.street'])
-    expect(response_body['address']['suite']).to eq(usuario_esperado['address.suite'])
-    expect(response_body['address']['city']).to eq(usuario_esperado['address.city'])
-    expect(response_body['address']['zipcode']).to eq(usuario_esperado['address.zipcode'])
+    campos.each do |campo|
+      resultValue = usuario_esperado.dig(*campo.split('.'))
+      bodyValue = response_body.dig(*campo.split('.'))
 
-    # Validação dos campos de geo
-    expect(response_body['address']['geo']['lat']).to eq(usuario_esperado['address.geo.lat'])
-    expect(response_body['address']['geo']['lng']).to eq(usuario_esperado['address.geo.lng'])
-
-    # Validação dos campos de contato
-    expect(response_body['phone']).to eq(usuario_esperado['phone'])
-    expect(response_body['website']).to eq(usuario_esperado['website'])
-    
-    # Validação da empresa
-    expect(response_body['company']['name']).to eq(usuario_esperado['company.name'])
-    expect(response_body['company']['catchPhrase']).to eq(usuario_esperado['company.catchPhrase'])
-    expect(response_body['company']['bs']).to eq(usuario_esperado['company.bs'])
+      expect(bodyValue).to eq(resultValue), "Falha no campo: #{campo}. Esperado: #{resultValue}, Obtido: #{bodyValue}"
+    end
   end
 end
+
 
 Então('a resposta deve seguir as regras de contrato') do 
   response_body = JSON.parse(@response.body)

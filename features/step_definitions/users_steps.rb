@@ -1,4 +1,4 @@
-  Dado('que eu tenha os dados do novo usuário') do
+  Dado('que um novo usuário é gerado') do
     @novo_usuario = UserFactory.build
   end
 

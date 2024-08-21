@@ -23,3 +23,10 @@ Funcionalidade: Garantir a estabilidade do endpoint /users
         Exemplos:
         | endpoint                 |
         | /users/1                 | 
+    
+    @smoke_test @create_new_user @#marcos_netto
+    Cenario: Criar um novo usuário
+        Dado  que eu tenha os dados do novo usuário
+        Quando eu enviar uma requisição POST para "/users"
+        Então a resposta deve ter status 201
+        E o corpo da resposta deve conter os dados corretos do usuário

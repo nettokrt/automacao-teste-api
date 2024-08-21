@@ -15,7 +15,6 @@ Então('validar a resposta da API com dados mockados') do
   Utils.verify_status_code(@response, 200)
 
   if @endpoint == "/users"
-    expect(@response.code).to eq(200)
     expect(@response.body).not_to be_nil
   else
     dados_yaml = YAML.load_file('features/support/factory/static/development.yml')

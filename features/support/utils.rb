@@ -38,4 +38,19 @@ module Utils
       raise "Formato de website inválido: #{website}"
     end
   end
+
+  def self.comparar_dados(expected, actual, path = '')
+    expected.each do |key, value|
+      current_path = path.empty? ? key.to_s : "#{path}.#{key}"
+
+      if value.is_a?(Hash)
+        comparar_dados(value, actual[key.to_s], current_path)
+      else
+        actual_value = actual[key.to_s]
+        if actual_value != value
+          raise "Falha no campo: #{current_path}. Esperado: #{value}, Obtido: #{actual_value}"
+        end
+      end
+    end
+  end
 end

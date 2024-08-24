@@ -28,5 +28,21 @@ Funcionalidade: Garantir a estabilidade do endpoint /users
     Cenario: Criar um novo usuário
         Dado que um novo usuário é gerado
         Quando eu enviar uma requisição POST para "/users"
-        Então a resposta deve ter status 201
+        Então a resposta deve retornar o status code <status_code>
         E o corpo da resposta deve conter os dados corretos do usuário
+
+        Exemplos:
+        | status_code |
+        | 201         |
+
+    @smoke_test @negative_path @#marcos_netto
+    Cenario: Validar caminhos negativos
+        Dado que eu faça uma requisição ao "<endpoint>"
+        Então a resposta deve retornar o status code <status_code>
+        E a mensagem de erro deve ser "<mensagem_erro>"
+
+        Exemplos:
+        | endpoint                 | mensagem_erro | status_code | 
+        | /users/9999              | Not Found     | 404         |
+        | /users/abc               | Not Found     | 404         |
+        #| /users?user_id=@!#      | Bad Request   | 400         | #Existe um bug na API que quando e passado uma query mal formado, a API esta retornando 200 ao em vez de 400

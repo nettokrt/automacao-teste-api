@@ -79,6 +79,5 @@
   end
 
   Então('a mensagem de erro deve ser {string}') do |mensagem_erro|
-    puts @response.body
     expect(@response.message).to eq(mensagem_erro)
   end
